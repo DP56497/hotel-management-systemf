@@ -1,0 +1,173 @@
+.order-layout {
+  display: grid;
+  grid-template-columns: 1fr 340px;
+  gap: 1.5rem;
+  align-items: flex-start;
+}
+
+@media (max-width: 900px) {
+  .order-layout { grid-template-columns: 1fr; }
+}
+
+/* Menu panel */
+.order-menu-panel { min-width: 0; }
+
+.menu-items-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 1rem;
+}
+
+.menu-item-card {
+  padding: 1rem;
+  border-radius: 12px;
+  transition: transform 0.15s;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+.menu-item-card:hover { transform: translateY(-2px); }
+.menu-item-card.unavailable { opacity: 0.45; pointer-events: none; }
+
+.menu-item-info { flex: 1; }
+.menu-item-name { color: white; font-weight: 500; font-size: 0.95rem; margin-bottom: 4px; }
+.menu-item-price { color: #6ee7b7; font-weight: 600; font-size: 1rem; }
+
+.not-avail-badge {
+  font-size: 0.75rem;
+  color: #ef4444;
+  background: rgba(239,68,68,0.1);
+  border: 1px solid rgba(239,68,68,0.2);
+  border-radius: 6px;
+  padding: 4px 8px;
+  text-align: center;
+}
+
+/* +/- qty controls */
+.qty-controls {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.qty-btn {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  border: 1px solid rgba(255,255,255,0.15);
+  background: rgba(255,255,255,0.06);
+  color: white;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.15s;
+}
+.qty-btn:hover:not(:disabled) { background: rgba(255,255,255,0.12); }
+.qty-btn:disabled { opacity: 0.3; cursor: not-allowed; }
+.qty-btn.plus { background: rgba(99,102,241,0.2); border-color: rgba(99,102,241,0.4); }
+.qty-btn.plus:hover { background: rgba(99,102,241,0.35); }
+.qty-num { min-width: 24px; text-align: center; font-weight: 600; color: white; }
+
+/* Cart panel */
+.order-cart-panel {
+  padding: 1.25rem;
+  position: sticky;
+  top: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  max-height: calc(100vh - 6rem);
+}
+
+.cart-header {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid rgba(255,255,255,0.07);
+  color: white;
+  font-weight: 600;
+}
+.cart-count {
+  margin-left: auto;
+  font-size: 0.8rem;
+  color: #94a3b8;
+  background: rgba(255,255,255,0.05);
+  padding: 2px 8px;
+  border-radius: 999px;
+}
+
+.cart-items {
+  overflow-y: auto;
+  flex: 1;
+  max-height: 300px;
+  padding: 0.75rem 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+.cart-row {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.6rem 0;
+  border-bottom: 1px solid rgba(255,255,255,0.04);
+}
+.cart-item-name { color: white; font-size: 0.88rem; font-weight: 500; }
+.cart-item-sub { color: #64748b; font-size: 0.78rem; }
+.cart-item-total { color: #6ee7b7; font-weight: 600; font-size: 0.9rem; white-space: nowrap; }
+
+.remove-cart-btn {
+  background: none;
+  border: none;
+  color: #64748b;
+  cursor: pointer;
+  padding: 3px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  transition: color 0.15s;
+}
+.remove-cart-btn:hover { color: #ef4444; }
+
+.cart-footer { padding-top: 0.75rem; border-top: 1px solid rgba(255,255,255,0.07); margin-top: auto; }
+.cart-total-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: #94a3b8;
+  font-size: 0.9rem;
+}
+.cart-grand-total {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: white;
+}
+
+/* Menu tabs reused from MenuManagement */
+.menu-tabs { display: flex; gap: 0.5rem; }
+.menu-tab {
+  display: flex; align-items: center; gap: 0.4rem;
+  padding: 0.5rem 1.2rem; border-radius: 999px;
+  border: 1px solid rgba(255,255,255,0.1);
+  background: rgba(255,255,255,0.04);
+  color: #94a3b8; cursor: pointer; font-size: 0.85rem; font-weight: 500;
+  transition: all 0.2s;
+}
+.menu-tab.active {
+  background: linear-gradient(135deg, #6366f1, #8b5cf6);
+  color: white; border-color: transparent;
+  box-shadow: 0 4px 14px rgba(99,102,241,0.3);
+}
+.sub-tabs { display: flex; gap: 0.4rem; flex-wrap: wrap; }
+.sub-tab {
+  padding: 0.35rem 0.9rem; border-radius: 999px;
+  border: 1px solid rgba(255,255,255,0.08);
+  background: transparent; color: #64748b;
+  cursor: pointer; font-size: 0.8rem; font-weight: 500; transition: all 0.2s;
+}
+.sub-tab.active {
+  background: rgba(99,102,241,0.15);
+  border-color: rgba(99,102,241,0.4);
+  color: #a5b4fc;
+}
