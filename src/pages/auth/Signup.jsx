@@ -29,7 +29,7 @@ const Signup = () => {
   React.useEffect(() => {
     const fetchHotels = async () => {
       try {
-        const res = await fetch('http://localhost:5000/api/auth/hotels');
+        const res = await fetch('https://hotel-management-system-oi2e.onrender.com/api/auth/hotels');
         const data = await res.json();
         if (res.ok) setHotelList(data);
       } catch (err) {
