@@ -17,18 +17,18 @@ export const AuthProvider = ({ children }) => {
     setLoading(false);
   }, []);
 
-  const signup = async (fullName, email, password, role, hotelDetails) => {
-    const response = await fetch('https://hotel-management-system-oi2e.onrender.com/api/auth/signup', {
+  const signup = async (fullName, email, password, role, hotelDetails, department) => {
+    const response = await fetch('http://localhost:5000/api/auth/signup', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ fullName, email, password, role, hotelDetails })
+      body: JSON.stringify({ fullName, email, password, role, hotelDetails, department })
     });
     
     const data = await response.json();
     if (!response.ok) throw new Error(data.message || 'Signup failed');
     
     // Save to local storage
-    const userData = { _id: data._id, name: data.fullName, email: data.email, role: data.role, hotelDetails: data.hotelDetails, status: data.status, token: data.token };
+    const userData = { _id: data._id, name: data.fullName, email: data.email, role: data.role, hotelDetails: data.hotelDetails, department: data.department, status: data.status, token: data.token };
     setUser(userData);
     localStorage.setItem('user', JSON.stringify(userData));
     return userData;
