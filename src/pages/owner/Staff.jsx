@@ -27,7 +27,7 @@ const Staff = () => {
             _id: s._id,
             name: s.fullName,
             email: s.email,
-            department: departments[1],
+            department: s.department || departments[1],
             joinDate: s.createdAt ? s.createdAt.substring(0, 10) : new Date().toISOString().substring(0, 10),
             endDate: 'Active',
             salary: 2500,
