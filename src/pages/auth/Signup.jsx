@@ -24,12 +24,15 @@ const Signup = () => {
   // Hotel Selection state for Manager/Staff
   const [hotelList, setHotelList] = useState([]);
   const [selectedHotelIndex, setSelectedHotelIndex] = useState('');
+  
+  // Staff specialty state
+  const [department, setDepartment] = useState('');
 
   // Fetch hotels for dropdown
   React.useEffect(() => {
     const fetchHotels = async () => {
       try {
-        const res = await fetch('https://hotel-management-system-oi2e.onrender.com/api/auth/hotels');
+        const res = await fetch('http://localhost:5000/api/auth/hotels');
         const data = await res.json();
         if (res.ok) setHotelList(data);
       } catch (err) {
@@ -58,7 +61,7 @@ const Signup = () => {
         finalHotelDetails = hotelList[selectedHotelIndex];
       }
       
-      await signup(fullName, email, password, role, finalHotelDetails);
+      await signup(fullName, email, password, role, finalHotelDetails, role === 'Staff' ? department : undefined);
     } catch (err) {
       setError(err.message || 'Signup failed');
     }
@@ -190,7 +193,7 @@ const Signup = () => {
               <h3 style={{ color: 'white', marginBottom: '1.2rem', fontSize: '1.1rem', display: 'flex', alignItems: 'center', gap: '0.5rem', fontWeight: '500' }}>
                 <Building size={18} style={{ color: '#3b82f6' }} /> Select Your Assigned Hotel
               </h3>
-              <div className="form-group" style={{ marginBottom: '0' }}>
+              <div className="form-group" style={{ marginBottom: role === 'Staff' ? '1.5rem' : '0' }}>
                 <label className="input-label">Available Hotels</label>
                 <div className="input-wrapper">
                   <Hotel size={20} className="input-icon" />
@@ -207,6 +210,26 @@ const Signup = () => {
                   </select>
                 </div>
               </div>
+              {role === 'Staff' && (
+                <div className="form-group" style={{ marginBottom: '0' }}>
+                  <label className="input-label">Select Specialty / Dish Type</label>
+                  <div className="input-wrapper">
+                    <Briefcase size={20} className="input-icon" />
+                    <select 
+                      className="input-field with-icon custom-select" 
+                      value={department}
+                      onChange={(e) => setDepartment(e.target.value)}
+                      required
+                    >
+                      <option value="" disabled>Select Specialty...</option>
+                      <option value="Gujarati food dish">Gujarati food dish</option>
+                      <option value="Punjabi food dish">Punjabi food dish</option>
+                      <option value="Chinese food dish">Chinese food dish</option>
+                      <option value="South Indian food dish">South Indian food dish</option>
+                    </select>
+                  </div>
+                </div>
+              )}
             </div>
           )}
 
@@ -226,3 +249,7 @@ const Signup = () => {
 };
 
 export default Signup;
+
+
+
+
