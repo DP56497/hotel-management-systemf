@@ -148,8 +148,7 @@ const Managers = () => {
               <ol style={{ marginLeft: '1.5rem', marginTop: '0.75rem' }}>
                 <li>Go to <strong style={{ color: '#3b82f6' }}>/signup</strong> and select the <strong style={{ color: 'white' }}>Manager</strong> role.</li>
                 <li>Choose <strong style={{ color: 'white' }}>{user?.hotelDetails?.name || 'your hotel'}</strong> from the hotel dropdown.</li>
-                <li>Their account will appear in your <strong style={{ color: 'white' }}>Pending Approvals</strong> on the Dashboard.</li>
-                <li>Click <strong style={{ color: '#10b981' }}>Approve</strong> to grant them access.</li>
+                <li>Once registered, their account is immediately active and ready to log in.</li>
               </ol>
             </div>
             <div className="modal-actions">
