@@ -1,19 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, BarChart, Bar } from 'recharts';
+import { XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, BarChart, Bar } from 'recharts';
 import { Users, UserCheck, DollarSign, Clock, Hotel, MapPin, CheckCircle, XCircle } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
 import { API_BASE, authHeader } from '../../utils/api';
 import './Dashboard.css';
-
-const salaryData = [
-  { name: 'Jan', managers: 4000, staff: 2400 },
-  { name: 'Feb', managers: 3000, staff: 1398 },
-  { name: 'Mar', managers: 2000, staff: 9800 },
-  { name: 'Apr', managers: 2780, staff: 3908 },
-  { name: 'May', managers: 1890, staff: 4800 },
-  { name: 'Jun', managers: 2390, staff: 3800 },
-  { name: 'Jul', managers: 3490, staff: 4300 },
-];
 
 const Dashboard = () => {
   const { user } = useAuth();
@@ -190,32 +180,6 @@ const Dashboard = () => {
           )}
 
           <div className="charts-grid">
-            <div className="chart-card glass-panel">
-              <h3 className="chart-title">Salary Expenditure (6 Months)</h3>
-              <div className="chart-wrapper">
-                <ResponsiveContainer width="100%" height="100%">
-                  <AreaChart data={salaryData} margin={{ top: 10, right: 30, left: 0, bottom: 0 }}>
-                    <defs>
-                      <linearGradient id="colorManagers" x1="0" y1="0" x2="0" y2="1">
-                        <stop offset="5%" stopColor="#8b5cf6" stopOpacity={0.8} />
-                        <stop offset="95%" stopColor="#8b5cf6" stopOpacity={0} />
-                      </linearGradient>
-                      <linearGradient id="colorStaff" x1="0" y1="0" x2="0" y2="1">
-                        <stop offset="5%" stopColor="#3b82f6" stopOpacity={0.8} />
-                        <stop offset="95%" stopColor="#3b82f6" stopOpacity={0} />
-                      </linearGradient>
-                    </defs>
-                    <XAxis dataKey="name" stroke="#94a3b8" fontSize={12} tickLine={false} axisLine={false} />
-                    <YAxis stroke="#94a3b8" fontSize={12} tickLine={false} axisLine={false} tickFormatter={(v) => `$${v}`} />
-                    <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.05)" vertical={false} />
-                    <Tooltip contentStyle={{ backgroundColor: '#1e293b', borderColor: '#334155', color: '#fff', borderRadius: '8px' }} itemStyle={{ color: '#fff' }} />
-                    <Area type="monotone" dataKey="staff" stroke="#3b82f6" fillOpacity={1} fill="url(#colorStaff)" name="Staff Salary" />
-                    <Area type="monotone" dataKey="managers" stroke="#8b5cf6" fillOpacity={1} fill="url(#colorManagers)" name="Manager Salary" />
-                  </AreaChart>
-                </ResponsiveContainer>
-              </div>
-            </div>
-
             <div className="chart-card glass-panel">
               <h3 className="chart-title">Team Distribution</h3>
               <div className="chart-wrapper">
