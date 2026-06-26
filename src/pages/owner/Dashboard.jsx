@@ -33,45 +33,13 @@ const Dashboard = () => {
     if (user?.token) fetchAllStaff();
   }, [user]);
 
-  const approveUser = async (id) => {
-    try {
-      const res = await fetch(`${API_BASE}/api/auth/staff/${id}/approve`, {
-        method: 'PUT',
-        headers: authHeader(user.token),
-      });
-      if (res.ok) {
-        setManagers(managers.map(m => m._id === id ? { ...m, status: 'Approved' } : m));
-        setStaff(staff.map(s => s._id === id ? { ...s, status: 'Approved' } : s));
-      }
-    } catch (err) {
-      console.error(err);
-    }
-  };
-
-  const rejectUser = async (id) => {
-    try {
-      const res = await fetch(`${API_BASE}/api/auth/staff/${id}/reject`, {
-        method: 'PUT',
-        headers: authHeader(user.token),
-      });
-      if (res.ok) {
-        setManagers(managers.filter(m => m._id !== id));
-        setStaff(staff.filter(s => s._id !== id));
-      }
-    } catch (err) {
-      console.error(err);
-    }
-  };
-
-  const activeStaff = staff.filter(s => s.status === 'Approved').length;
-  const activeManagersCount = managers.filter(m => m.status === 'Approved').length;
-  const pendingRequests = [...managers, ...staff].filter(u => u.status === 'Pending');
+  const activeStaff = staff.length;
+  const activeManagersCount = managers.length;
   const totalSalary = (activeStaff * 2500) + (activeManagersCount * 4000);
 
   const dynamicTeamData = [
     { name: 'Staff', count: activeStaff },
     { name: 'Managers', count: activeManagersCount },
-    { name: 'Pending', count: pendingRequests.length },
   ];
 
   return (
@@ -132,52 +100,7 @@ const Dashboard = () => {
                 <h3 className="stat-value">${totalSalary.toLocaleString()}</h3>
               </div>
             </div>
-
-            <div className="stat-card glass-panel">
-              <div className="stat-icon bg-orange"><Clock size={24} /></div>
-              <div className="stat-details">
-                <p className="stat-title">Pending Approvals</p>
-                <h3 className="stat-value">{pendingRequests.length}</h3>
-              </div>
-            </div>
           </div>
-
-          {pendingRequests.length > 0 && (
-            <div className="glass-panel" style={{ padding: '1.5rem', marginTop: '1.5rem', marginBottom: '1.5rem' }}>
-              <h3 style={{ color: 'white', marginBottom: '1rem', fontSize: '1.2rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                <Clock size={20} style={{ color: '#f97316' }} /> Pending Account Approvals
-              </h3>
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-                {pendingRequests.map(req => (
-                  <div key={req._id} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', background: 'rgba(255,255,255,0.03)', padding: '1.2rem', borderRadius: '8px', border: '1px solid rgba(255,255,255,0.05)', flexWrap: 'wrap', gap: '1rem' }}>
-                    <div>
-                      <h4 style={{ color: 'white', fontSize: '1.05rem', marginBottom: '6px' }}>
-                        {req.fullName}
-                        <span style={{ fontSize: '0.75rem', padding: '2px 8px', background: 'rgba(59,130,246,0.2)', color: '#3b82f6', borderRadius: '12px', marginLeft: '8px', verticalAlign: 'middle' }}>{req.role}</span>
-                      </h4>
-                      <p style={{ color: '#94a3b8', fontSize: '0.9rem' }}>{req.email}</p>
-                    </div>
-                    <div style={{ display: 'flex', gap: '0.75rem' }}>
-                      <button
-                        onClick={() => approveUser(req._id)}
-                        className="btn-primary"
-                        style={{ display: 'flex', alignItems: 'center', gap: '6px', padding: '0.5rem 1rem', background: '#10b981', border: 'none' }}
-                      >
-                        <CheckCircle size={16} /> Approve
-                      </button>
-                      <button
-                        onClick={() => rejectUser(req._id)}
-                        className="btn-primary"
-                        style={{ display: 'flex', alignItems: 'center', gap: '6px', padding: '0.5rem 1rem', background: '#ef4444', border: 'none' }}
-                      >
-                        <XCircle size={16} /> Reject
-                      </button>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-          )}
 
           <div className="charts-grid">
             <div className="chart-card glass-panel">
